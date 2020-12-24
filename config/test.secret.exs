@@ -4,29 +4,23 @@
 # remember to add this file to your .gitignore.
 use Mix.Config
 
+require Logger
+
 database_user =
   System.get_env("POSTGRES_USER") ||
-    raise """
-    environment variable POSTGRES_USER is missing.
-    """
+    Logger.alert("environment variable POSTGRES_USER is missing.")
 
 database_pass =
   System.get_env("POSTGRES_PASSWORD") ||
-    raise """
-    environment variable POSTGRES_PASSWORD is missing.
-    """
+    Logger.alert("environment variable POSTGRES_PASSWORD is missing.")
 
 database_name =
   System.get_env("POSTGRES_DB") ||
-    raise """
-    environment variable POSTGRES_DB is missing.
-    """
+    Logger.alert("environment variable POSTGRES_DB is missing.")
 
 database_host =
   System.get_env("POSTGRES_HOST") ||
-    raise """
-    environment variable POSTGRES_HOST is missing.
-    """
+    Logger.alert("environment variable POSTGRES_HOST is missing.")
 
 # Configure your database
 #
@@ -36,5 +30,5 @@ database_host =
 config :stocked, Stocked.Repo,
   username: database_user,
   password: database_pass,
-  database: "#{database_name}#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "#{database_name}_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: database_host

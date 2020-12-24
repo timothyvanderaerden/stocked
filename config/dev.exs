@@ -1,6 +1,10 @@
 use Mix.Config
 
-# Database credentials are set in `dev.secret.exs`
+# Import the config/dev.secret.exs which loads secrets
+# and configuration from environment variables.
+import_config "dev.secret.exs"
+
+# Override database credentials which are set in `dev.secret.exs`
 config :stocked, Stocked.Repo, show_sensitive_data_on_connection_error: true
 
 # For development, we disable any cache and enable
@@ -68,7 +72,3 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
-
-# Finally import the config/dev.secret.exs which loads secrets
-# and configuration from environment variables.
-import_config "dev.secret.exs"
