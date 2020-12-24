@@ -1,0 +1,39 @@
+<h1>Listing Supplier</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, StockedWeb.SupplierLive.FormComponent,
+    id: @supplier.id || :new,
+    title: @page_title,
+    action: @live_action,
+    supplier: @supplier,
+    return_to: Routes.supplier_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email address</th>
+      <th>Name</th>
+      <th>Phone number</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="supplier">
+    <%= for supplier <- @supplier_collection do %>
+      <tr id="supplier-<%= supplier.id %>">
+        <td><%= supplier.email_address %></td>
+        <td><%= supplier.name %></td>
+        <td><%= supplier.phone_number %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.supplier_show_path(@socket, :show, supplier) %></span>
+          <span><%= live_patch "Edit", to: Routes.supplier_index_path(@socket, :edit, supplier) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: supplier.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Supplier", to: Routes.supplier_index_path(@socket, :new) %></span>

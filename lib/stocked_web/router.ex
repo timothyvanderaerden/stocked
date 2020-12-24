@@ -25,6 +25,13 @@ defmodule StockedWeb.Router do
 
     live "/products/:id", ProductLive.Show, :show
     live "/products/:id/show/edit", ProductLive.Show, :edit
+
+    live "/suppliers", SupplierLive.Index, :index
+    live "/suppliers/new", SupplierLive.Index, :new
+    live "/suppliers/:id/edit", SupplierLive.Index, :edit
+
+    live "/suppliers/:id", SupplierLive.Show, :show
+    live "/suppliers/:id/show/edit", SupplierLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

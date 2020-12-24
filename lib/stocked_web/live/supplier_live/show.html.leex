@@ -1,0 +1,32 @@
+<h1>Show Supplier</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, StockedWeb.SupplierLive.FormComponent,
+    id: @supplier.id,
+    title: @page_title,
+    action: @live_action,
+    supplier: @supplier,
+    return_to: Routes.supplier_show_path(@socket, :show, @supplier) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Email address:</strong>
+    <%= @supplier.email_address %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @supplier.name %>
+  </li>
+
+  <li>
+    <strong>Phone number:</strong>
+    <%= @supplier.phone_number %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.supplier_show_path(@socket, :edit, @supplier), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.supplier_index_path(@socket, :index) %></span>
