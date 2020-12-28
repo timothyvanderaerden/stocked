@@ -5,8 +5,6 @@ defmodule StockedWeb.ProductLive.FormComponent do
 
   alias Stocked.Contract
 
-  require Logger
-
   @impl true
   def mount(socket) do
     {:ok,
@@ -35,7 +33,6 @@ defmodule StockedWeb.ProductLive.FormComponent do
   end
 
   def handle_event("save", %{"product" => product_params}, socket) do
-    Logger.warn(product_params)
     save_product(socket, socket.assigns.action, product_params)
   end
 

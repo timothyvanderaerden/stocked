@@ -3,14 +3,13 @@ defmodule Stocked.InventoryTest do
 
   alias Stocked.Inventory
   alias Stocked.Catalog
-  alias Stocked.Contract
 
   describe "stock" do
     alias Stocked.Inventory.Stock
 
-    @valid_attrs %{quantity: 42}
-    @update_attrs %{quantity: 43}
-    @invalid_attrs %{quantity: nil}
+    @valid_attrs %{quantity: 42, required_quantity: 120}
+    @update_attrs %{quantity: 43, required_quantity: 121}
+    @invalid_attrs %{quantity: nil, required_quantity: nil}
 
     @product_attrs %{description: "some description", name: "some name"}
 
