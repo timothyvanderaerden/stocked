@@ -41,7 +41,7 @@ defmodule Stocked.Catalog do
   def get_product!(id) do
     Product
     |> Repo.get!(id)
-    |> Repo.preload(stock: [:supplier])
+    |> Repo.preload(:stock)
     |> Repo.preload(attributes: [:supplier])
   end
 

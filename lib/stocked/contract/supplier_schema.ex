@@ -9,8 +9,6 @@ defmodule Stocked.Contract.Supplier do
     field :name, :string
     field :phone_number, :string
 
-    has_many :stock, Stocked.Inventory.Stock
-
     timestamps()
   end
 

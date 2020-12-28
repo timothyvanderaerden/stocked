@@ -8,7 +8,7 @@ defmodule Stocked.Catalog.Product do
     field :description, :string
     field :name, :string
 
-    has_many :stock, Stocked.Inventory.Stock
+    has_one :stock, Stocked.Inventory.Stock
     has_many :attributes, Stocked.Catalog.ProductAttributes
 
     timestamps()

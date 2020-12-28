@@ -28,16 +28,15 @@ defmodule Stocked.Inventory do
 
   ## Examples
 
-      iex> get_stock!(%{product_id: "UUIDv4", supplier_id: "UUIDv4"})
+      iex> get_stock!(123)
       %Stock{}
 
-      iex> get_stock!(%{product_id: "UUIDv4", supplier_id: "UUIDv4"})
+      iex> get_stock!(123)
       ** (Ecto.NoResultsError)
 
   """
-  def get_stock!(primary_keys)
-      when is_map_key(primary_keys, :product_id) and is_map_key(primary_keys, :supplier_id) do
-    Repo.get_by!(Stock, primary_keys)
+  def get_stock!(id) do
+    Repo.get!(Stock, id)
   end
 
   @doc """

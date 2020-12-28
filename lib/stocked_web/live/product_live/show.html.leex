@@ -21,6 +21,26 @@
     <%= @product.description %>
   </li>
 
+  <h2>Stock</h2>
+
+  <li>
+    <strong>Stock:</strong>
+    <%= if is_nil(@product.stock) do %>
+      0
+    <% else %>
+      <%= @product.stock.quantity %>
+    <% end %>
+  </li>
+
+  <li>
+    <strong>Wanted stock:</strong>
+    <%= if is_nil(@product.stock) do %>
+      \
+    <% else %>
+      <%= @product.stock.required_quantity %>
+    <% end %>
+  </li>
+
 </ul>
 
 <span><%= live_patch "Edit", to: Routes.product_show_path(@socket, :edit, @product), class: "button" %></span>
@@ -28,24 +48,6 @@
 
 <br/>
 <br/>
-
-<h2>Stock</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Supplier</th>
-      <th>Quantity</th>
-    </tr>
-  </thead>
-  <tbody id="stock">
-    <%= for stock <- @product.stock do %>
-      <tr id="stock-<%= stock.product_id %>-<%= stock.supplier_id %>">
-        <td><%= stock.supplier.name %></td>
-        <td><%= stock.quantity %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
 <h2>Price</h2>
 <table>

@@ -12,20 +12,13 @@ defmodule Stocked.InventoryTest do
     @update_attrs %{quantity: 43}
     @invalid_attrs %{quantity: nil}
 
-    @supplier_attrs %{
-      email_address: "some@mail.com",
-      name: "some name",
-      phone_number: "+3211111111"
-    }
     @product_attrs %{description: "some description", name: "some name"}
 
     def stock_fixture(attrs \\ %{}) do
-      {:ok, supplier} = Contract.create_supplier(@supplier_attrs)
       {:ok, product} = Catalog.create_product(@product_attrs)
 
       {:ok, stock} =
         attrs
-        |> Map.put(:supplier_id, supplier.id)
         |> Map.put(:product_id, product.id)
         |> Enum.into(@valid_attrs)
         |> Inventory.create_stock()
@@ -41,14 +34,13 @@ defmodule Stocked.InventoryTest do
     test "get_stock!/1 returns the stock with given id" do
       stock = stock_fixture()
 
-      assert Inventory.get_stock!(%{product_id: stock.product_id, supplier_id: stock.supplier_id}) ==
+      assert Inventory.get_stock!(stock.product_id) ==
                stock
     end
 
     test "create_stock/1 with valid data creates a stock" do
-      {:ok, supplier} = Contract.create_supplier(@supplier_attrs)
       {:ok, product} = Catalog.create_product(@product_attrs)
-      attrs = %{supplier_id: supplier.id, product_id: product.id}
+      attrs = %{product_id: product.id}
 
       assert {:ok, %Stock{} = stock} = Inventory.create_stock(Enum.into(attrs, @valid_attrs))
       assert stock.quantity == 42
@@ -69,10 +61,7 @@ defmodule Stocked.InventoryTest do
       assert {:error, %Ecto.Changeset{}} = Inventory.update_stock(stock, @invalid_attrs)
 
       assert stock ==
-               Inventory.get_stock!(%{
-                 product_id: stock.product_id,
-                 supplier_id: stock.supplier_id
-               })
+               Inventory.get_stock!(stock.product_id)
     end
 
     test "delete_stock/1 deletes the stock" do
@@ -80,7 +69,7 @@ defmodule Stocked.InventoryTest do
       assert {:ok, %Stock{}} = Inventory.delete_stock(stock)
 
       assert_raise Ecto.NoResultsError, fn ->
-        Inventory.get_stock!(%{product_id: stock.product_id, supplier_id: stock.supplier_id})
+        Inventory.get_stock!(stock.product_id)
       end
     end
 

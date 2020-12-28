@@ -15,6 +15,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Total in stock</th>
+      <th>Wanted stock</th>
 
       <th></th>
     </tr>
@@ -24,7 +25,13 @@
       <tr id="product-<%= product.id %>">
         <td><%= product.name %></td>
         <td><%= product.description %></td>
-        <td style="text-align:center"><%= product.total_stock %></td>
+        <%= if is_nil(product.stock) do %>
+          <td style="text-align:center">0</td>
+          <td style="text-align:center">/</td>
+        <% else %>
+          <td style="text-align:center"><%= product.stock.quantity %></td>
+          <td style="text-align:center"><%= product.stock.required_quantity %></td>
+        <% end %>
 
         <td>
           <span><%= live_redirect "Show", to: Routes.product_show_path(@socket, :show, product) %></span>

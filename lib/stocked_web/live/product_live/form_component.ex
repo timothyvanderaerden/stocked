@@ -3,10 +3,9 @@ defmodule StockedWeb.ProductLive.FormComponent do
 
   alias Stocked.Catalog
 
-  alias Stocked.Inventory
-  alias Stocked.Inventory.Stock
-
   alias Stocked.Contract
+
+  require Logger
 
   @impl true
   def mount(socket) do
@@ -36,38 +35,8 @@ defmodule StockedWeb.ProductLive.FormComponent do
   end
 
   def handle_event("save", %{"product" => product_params}, socket) do
+    Logger.warn(product_params)
     save_product(socket, socket.assigns.action, product_params)
-  end
-
-  def handle_event("add-stock", _, socket) do
-    vars = Map.get(socket.assigns.changeset.changes, :stock, socket.assigns.product.stock)
-    product_id = socket.assigns.product.id
-
-    stock =
-      vars
-      |> Enum.concat([
-        Inventory.change_stock(%Stock{temp_id: get_temp_id(), product_id: product_id})
-      ])
-
-    changeset =
-      socket.assigns.changeset
-      |> Ecto.Changeset.put_assoc(:stock, stock)
-
-    {:noreply, assign(socket, changeset: changeset)}
-  end
-
-  def handle_event("remove-stock", %{"remove" => remove_id}, socket) do
-    stock =
-      socket.assigns.changeset.changes.stock
-      |> Enum.reject(fn %{data: s} ->
-        s.temp_id == remove_id
-      end)
-
-    changeset =
-      socket.assigns.changeset
-      |> Ecto.Changeset.put_assoc(:stock, stock)
-
-    {:noreply, assign(socket, changeset: changeset)}
   end
 
   defp save_product(socket, :edit, product_params) do
@@ -95,6 +64,4 @@ defmodule StockedWeb.ProductLive.FormComponent do
         {:noreply, assign(socket, changeset: changeset)}
     end
   end
-
-  defp get_temp_id, do: :crypto.strong_rand_bytes(5) |> Base.url_encode64() |> binary_part(0, 5)
 end
