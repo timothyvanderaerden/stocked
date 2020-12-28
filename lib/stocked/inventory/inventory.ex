@@ -35,7 +35,8 @@ defmodule Stocked.Inventory do
       ** (Ecto.NoResultsError)
 
   """
-  def get_stock!(%{product_id: _product_id, supplier_id: _supplier_id} = primary_keys) do
+  def get_stock!(primary_keys)
+      when is_map_key(primary_keys, :product_id) and is_map_key(primary_keys, :supplier_id) do
     Repo.get_by!(Stock, primary_keys)
   end
 

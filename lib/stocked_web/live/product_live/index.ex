@@ -6,7 +6,11 @@ defmodule StockedWeb.ProductLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :product_collection, list_product())}
+    products =
+      list_product()
+      |> calculate_stock()
+
+    {:ok, assign(socket, :product_collection, products)}
   end
 
   @impl true
@@ -42,5 +46,13 @@ defmodule StockedWeb.ProductLive.Index do
 
   defp list_product do
     Catalog.list_product()
+  end
+
+  defp calculate_stock(products) do
+    products
+    |> Enum.map(fn product ->
+      total = Enum.reduce(product.stock, 0, fn x, acc -> x.quantity + acc end)
+      Map.put(product, :total_stock, total)
+    end)
   end
 end

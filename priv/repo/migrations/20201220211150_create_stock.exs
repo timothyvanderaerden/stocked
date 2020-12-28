@@ -16,5 +16,6 @@ defmodule Stocked.Repo.Migrations.CreateStock do
 
     create index(:stock, [:product_id])
     create index(:stock, [:supplier_id])
+    create unique_index(:stock, [:product_id, :supplier_id], name: :unique_product_supplier_stock)
   end
 end

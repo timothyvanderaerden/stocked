@@ -9,6 +9,7 @@ defmodule Stocked.Catalog.Product do
     field :name, :string
 
     has_many :stock, Stocked.Inventory.Stock
+    has_many :attributes, Stocked.Catalog.ProductAttributes
 
     timestamps()
   end
@@ -17,6 +18,7 @@ defmodule Stocked.Catalog.Product do
   def changeset(product, attrs) do
     product
     |> cast(attrs, [:name, :description])
+    |> cast_assoc(:stock)
     |> validate_required([:name, :description])
     |> validate_length(:name, min: 2, max: 255)
     |> validate_length(:description, max: 255)

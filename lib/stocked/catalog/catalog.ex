@@ -19,7 +19,9 @@ defmodule Stocked.Catalog do
 
   """
   def list_product do
-    Repo.all(Product)
+    Product
+    |> Repo.all()
+    |> Repo.preload([:stock])
   end
 
   @doc """
@@ -36,7 +38,12 @@ defmodule Stocked.Catalog do
       ** (Ecto.NoResultsError)
 
   """
-  def get_product!(id), do: Repo.get!(Product, id)
+  def get_product!(id) do
+    Product
+    |> Repo.get!(id)
+    |> Repo.preload(stock: [:supplier])
+    |> Repo.preload(attributes: [:supplier])
+  end
 
   @doc """
   Creates a product.

@@ -25,3 +25,42 @@
 
 <span><%= live_patch "Edit", to: Routes.product_show_path(@socket, :edit, @product), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.product_index_path(@socket, :index) %></span>
+
+<br/>
+<br/>
+
+<h2>Stock</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Supplier</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+  <tbody id="stock">
+    <%= for stock <- @product.stock do %>
+      <tr id="stock-<%= stock.product_id %>-<%= stock.supplier_id %>">
+        <td><%= stock.supplier.name %></td>
+        <td><%= stock.quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Price</h2>
+<table>
+<thead>
+    <tr>
+      <th>Supplier</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody id="attribute">
+    <%= for attribute <- @product.attributes do %>
+      <tr id="attribute-<%= attribute.product_id %>-<%= attribute.supplier_id %>">
+        <td><%= attribute.supplier.name %></td>
+        <td><%= attribute.price %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
