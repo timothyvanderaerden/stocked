@@ -5,9 +5,13 @@ defmodule StockedWeb.ProductLiveTest do
 
   alias Stocked.Catalog
 
+  @stock_attrs %{quantity: 10, required_quantity: 100}
+  @stock_invalid_attrs %{quantity: nil, required_quantity: nil}
+
   @create_attrs %{description: "some description", name: "some name"}
-  @update_attrs %{description: "some updated description", name: "some updated name"}
+  @update_attrs %{description: "some updated description", name: "some updated name", stock: @stock_attrs}
   @invalid_attrs %{description: nil, name: nil}
+  @invalid_stock_attrs Map.merge(@invalid_attrs, %{stock: @stock_invalid_attrs})
 
   defp fixture(:product) do
     {:ok, product} = Catalog.create_product(@create_attrs)
@@ -60,7 +64,7 @@ defmodule StockedWeb.ProductLiveTest do
       assert_patch(index_live, Routes.product_index_path(conn, :edit, product))
 
       assert index_live
-             |> form("#product-form", product: @invalid_attrs)
+             |> form("#product-form", product: @invalid_stock_attrs)
              |> render_change() =~ "can&apos;t be blank"
 
       {:ok, _, html} =
@@ -100,7 +104,7 @@ defmodule StockedWeb.ProductLiveTest do
       assert_patch(show_live, Routes.product_show_path(conn, :edit, product))
 
       assert show_live
-             |> form("#product-form", product: @invalid_attrs)
+             |> form("#product-form", product: @invalid_stock_attrs)
              |> render_change() =~ "can&apos;t be blank"
 
       {:ok, _, html} =
