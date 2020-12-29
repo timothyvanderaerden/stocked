@@ -5,6 +5,20 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "3dYRLxyabXYyk#3W"
+      POSTGRES_DB: "stocked"
+
+    services:
+      mysql:
+        image: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-elixir@v1
@@ -13,3 +27,6 @@ jobs:
           elixir-version: '1.11'
       - run: mix deps.get
       - run: mix test
+        env:
+          POSTGRES_HOST: "127.0.0.1"
+          POSTGRES_PORT: 5432
