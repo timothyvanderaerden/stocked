@@ -31,5 +31,5 @@ jobs:
           POSTGRES_USER: "admin"
           POSTGRES_PASSWORD: "3dYRLxyabXYyk#3W"
           POSTGRES_DB: "stocked"
-          POSTGRES_HOST: "127.0.0.1"
+          POSTGRES_HOST: "postgres"
           POSTGRES_PORT: 5432
