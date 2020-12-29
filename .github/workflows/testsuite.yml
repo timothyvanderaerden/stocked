@@ -2,16 +2,17 @@ name: Test-Suite
 
 on: push
 
+env:
+  POSTGRES_USER: "admin"
+  POSTGRES_PASSWORD: "3dYRLxyabXYyk#3W"
+  POSTGRES_DB: "stocked"
+
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "3dYRLxyabXYyk#3W"
-      POSTGRES_DB: "stocked"
 
     services:
-      mysql:
+      postgres:
         image: postgres
         options: >-
           --health-cmd pg_isready
