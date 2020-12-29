@@ -10,9 +10,9 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: "admin"
-          POSTGRES_PASSWORD: "3dYRLxyabXYyk#3W"
-          POSTGRES_DB: "stocked"
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: stocked
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -28,8 +28,8 @@ jobs:
       - run: mix deps.get
       - run: mix test
         env:
-          POSTGRES_USER: "admin"
-          POSTGRES_PASSWORD: "3dYRLxyabXYyk#3W"
-          POSTGRES_DB: "stocked"
-          POSTGRES_HOST: "postgres"
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: stocked
+          POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
