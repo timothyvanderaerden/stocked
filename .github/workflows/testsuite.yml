@@ -2,11 +2,6 @@ name: Test-Suite
 
 on: push
 
-env:
-  POSTGRES_USER: "admin"
-  POSTGRES_PASSWORD: "3dYRLxyabXYyk#3W"
-  POSTGRES_DB: "stocked"
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -14,6 +9,10 @@ jobs:
     services:
       postgres:
         image: postgres
+        env:
+          POSTGRES_USER: "admin"
+          POSTGRES_PASSWORD: "3dYRLxyabXYyk#3W"
+          POSTGRES_DB: "stocked"
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
