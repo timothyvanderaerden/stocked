@@ -19,6 +19,7 @@ defmodule Stocked.Catalog.Product do
     product
     |> cast(attrs, [:name, :description])
     |> cast_assoc(:stock)
+    |> cast_assoc(:attributes)
     |> validate_required([:name, :description])
     |> validate_length(:name, min: 2, max: 255)
     |> validate_length(:description, max: 255)

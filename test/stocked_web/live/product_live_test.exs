@@ -5,17 +5,26 @@ defmodule StockedWeb.ProductLiveTest do
 
   alias Stocked.Catalog
 
+  alias Stocked.Contract
+
   @stock_attrs %{quantity: 10, required_quantity: 100}
   @stock_invalid_attrs %{quantity: nil, required_quantity: nil}
+
+  @attributes_attrs %{price: 10}
+  @attributes_invalid_attrs %{price: nil}
 
   @create_attrs %{description: "some description", name: "some name"}
   @update_attrs %{
     description: "some updated description",
     name: "some updated name",
-    stock: @stock_attrs
+    stock: @stock_attrs,
+    attributes: %{"0" => @attributes_attrs}
   }
   @invalid_attrs %{description: nil, name: nil}
-  @invalid_stock_attrs Map.merge(@invalid_attrs, %{stock: @stock_invalid_attrs})
+  @invalid_update_attrs Map.merge(@invalid_attrs, %{
+                          stock: @stock_invalid_attrs,
+                          attributes: %{"0" => @attributes_invalid_attrs}
+                        })
 
   defp fixture(:product) do
     {:ok, product} = Catalog.create_product(@create_attrs)
@@ -27,8 +36,19 @@ defmodule StockedWeb.ProductLiveTest do
     %{product: product}
   end
 
+  defp create_supplier(_) do
+    {:ok, supplier} =
+      Contract.create_supplier(%{
+        email_address: "some@address.com",
+        name: "some name",
+        phone_number: "+3211111111"
+      })
+
+    %{supplier: supplier}
+  end
+
   describe "Index" do
-    setup [:create_product]
+    setup [:create_product, :create_supplier]
 
     test "lists all product", %{conn: conn, product: product} do
       {:ok, _index_live, html} = live(conn, Routes.product_index_path(conn, :index))
@@ -68,7 +88,11 @@ defmodule StockedWeb.ProductLiveTest do
       assert_patch(index_live, Routes.product_index_path(conn, :edit, product))
 
       assert index_live
-             |> form("#product-form", product: @invalid_stock_attrs)
+             |> element("a", "Add a price")
+             |> render_click() =~ "Price"
+
+      assert index_live
+             |> form("#product-form", product: @invalid_update_attrs)
              |> render_change() =~ "can&apos;t be blank"
 
       {:ok, _, html} =
@@ -90,7 +114,7 @@ defmodule StockedWeb.ProductLiveTest do
   end
 
   describe "Show" do
-    setup [:create_product]
+    setup [:create_product, :create_supplier]
 
     test "displays product", %{conn: conn, product: product} do
       {:ok, _show_live, html} = live(conn, Routes.product_show_path(conn, :show, product))
@@ -108,7 +132,11 @@ defmodule StockedWeb.ProductLiveTest do
       assert_patch(show_live, Routes.product_show_path(conn, :edit, product))
 
       assert show_live
-             |> form("#product-form", product: @invalid_stock_attrs)
+             |> element("a", "Add a price")
+             |> render_click() =~ "Price"
+
+      assert show_live
+             |> form("#product-form", product: @invalid_update_attrs)
              |> render_change() =~ "can&apos;t be blank"
 
       {:ok, _, html} =

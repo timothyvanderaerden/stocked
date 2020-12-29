@@ -32,6 +32,38 @@
         </div>
       </div>
     <% end %>
+
+    <h3>Pricing</h3>
+    <%= inputs_for f, :attributes, fn a -> %>
+      <div class="row">
+        <%= hidden_input a, :product_id, value: @product.id %>
+        <div class="form-group column">
+          <%= label a, :supplier %>
+          <%= select a, :supplier_id, Enum.map(@suppliers, &{&1.name, &1.id}) %>
+          <%= error_tag a, :supplier_id %>
+        </div>
+
+        <div class="form-group column">
+          <%= label a, :price %>
+          <%= text_input a, :price, class: "form-control" %>
+          <%= error_tag a, :price %>
+        </div>
+
+        <div class="form-group column">
+          <%= label a, :delete %>
+          <%= if is_nil(a.data.temp_id) do %>
+            <%= checkbox a, :delete %>
+          <% else %>
+            <%= hidden_input a, :temp_id %>
+            <a href="#" phx-click="remove-attribute" phx-value-remove="<%= a.data.temp_id %>" phx-target="<%= @myself %>">&times</a>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <a href="#" phx-click="add-attribute" phx-target="<%= @myself %>">Add a price</a>
+    <br/>
+    <br/>
   <% end %>
 
   <%= submit "Save", phx_disable_with: "Saving..." %>

@@ -16,5 +16,9 @@ defmodule Stocked.Repo.Migrations.CreateProductAttribute do
 
     create index(:product_attribute, [:product_id])
     create index(:product_attribute, [:supplier_id])
+
+    create unique_index(:product_attribute, [:product_id, :supplier_id],
+             name: :unique_product_supplier_attribute
+           )
   end
 end
