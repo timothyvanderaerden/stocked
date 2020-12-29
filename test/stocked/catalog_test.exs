@@ -21,12 +21,21 @@ defmodule Stocked.CatalogTest do
 
     test "list_product/0 returns all product" do
       product = product_fixture()
-      assert Catalog.list_product() == [product]
+
+      assert Catalog.list_product()
+             |> Enum.map(fn product ->
+               product
+               |> Unpreload.forget(:stock)
+               |> Unpreload.forget(:attributes, :many)
+             end) == [product]
     end
 
     test "get_product!/1 returns the product with given id" do
       product = product_fixture()
-      assert Catalog.get_product!(product.id) == product
+
+      assert Catalog.get_product!(product.id)
+             |> Unpreload.forget(:stock)
+             |> Unpreload.forget(:attributes, :many) == product
     end
 
     test "create_product/1 with valid data creates a product" do
@@ -49,7 +58,11 @@ defmodule Stocked.CatalogTest do
     test "update_product/2 with invalid data returns error changeset" do
       product = product_fixture()
       assert {:error, %Ecto.Changeset{}} = Catalog.update_product(product, @invalid_attrs)
-      assert product == Catalog.get_product!(product.id)
+
+      assert product ==
+               Catalog.get_product!(product.id)
+               |> Unpreload.forget(:stock)
+               |> Unpreload.forget(:attributes, :many)
     end
 
     test "delete_product/1 deletes the product" do

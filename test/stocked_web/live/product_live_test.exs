@@ -9,7 +9,11 @@ defmodule StockedWeb.ProductLiveTest do
   @stock_invalid_attrs %{quantity: nil, required_quantity: nil}
 
   @create_attrs %{description: "some description", name: "some name"}
-  @update_attrs %{description: "some updated description", name: "some updated name", stock: @stock_attrs}
+  @update_attrs %{
+    description: "some updated description",
+    name: "some updated name",
+    stock: @stock_attrs
+  }
   @invalid_attrs %{description: nil, name: nil}
   @invalid_stock_attrs Map.merge(@invalid_attrs, %{stock: @stock_invalid_attrs})
 
