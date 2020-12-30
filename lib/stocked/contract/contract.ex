@@ -18,7 +18,9 @@ defmodule Stocked.Contract do
 
   """
   def list_supplier do
-    Repo.all(Supplier)
+    Supplier
+    |> order_by(:name)
+    |> Repo.all()
   end
 
   @doc """

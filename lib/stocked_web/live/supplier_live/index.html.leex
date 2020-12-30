@@ -12,8 +12,8 @@
 <table>
   <thead>
     <tr>
-      <th>Email address</th>
       <th>Name</th>
+      <th>Email address</th>
       <th>Phone number</th>
 
       <th></th>
@@ -22,8 +22,8 @@
   <tbody id="supplier">
     <%= for supplier <- @supplier_collection do %>
       <tr id="supplier-<%= supplier.id %>">
-        <td><%= supplier.email_address %></td>
         <td><%= supplier.name %></td>
+        <td><%= supplier.email_address %></td>
         <td><%= supplier.phone_number %></td>
 
         <td>

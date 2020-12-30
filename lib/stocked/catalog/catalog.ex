@@ -20,6 +20,7 @@ defmodule Stocked.Catalog do
   """
   def list_product do
     Product
+    |> order_by(:name)
     |> Repo.all()
     |> Repo.preload([:stock])
   end
