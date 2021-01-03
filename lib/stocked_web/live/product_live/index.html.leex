@@ -29,7 +29,9 @@
           <td style="text-align:center">0</td>
           <td style="text-align:center">/</td>
         <% else %>
-          <td style="text-align:center"><%= product.stock.quantity %></td>
+          <td style="text-align:center;">
+            <%= render(StockedWeb.ProductView, "quantity.html", stock: product.stock) %>
+          </td>
           <td style="text-align:center"><%= product.stock.required_quantity %></td>
         <% end %>
 

@@ -28,7 +28,7 @@
     <%= if is_nil(@product.stock) do %>
       0
     <% else %>
-      <%= @product.stock.quantity %>
+      <%= render(StockedWeb.ProductView, "quantity.html", stock: @product.stock) %>
     <% end %>
   </li>
 
