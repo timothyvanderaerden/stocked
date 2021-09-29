@@ -7,11 +7,8 @@ use Mix.Config
 require Logger
 
 database_user = System.get_env("POSTGRES_USER") || "postgres"
-
 database_pass = System.get_env("POSTGRES_PASSWORD") || "postgres"
-
 database_name = System.get_env("POSTGRES_DB") || "stocked"
-
 database_host = System.get_env("POSTGRES_HOST") || "localhost"
 
 # Configure your database
