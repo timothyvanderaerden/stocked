@@ -1,7 +1,7 @@
 <h1>Show Product</h1>
 
 <%= if @live_action in [:edit] do %>
-  <%= live_modal @socket, StockedWeb.ProductLive.FormComponent,
+  <%= live_modal StockedWeb.ProductLive.FormComponent,
     id: @product.id,
     title: @page_title,
     action: @live_action,
@@ -59,7 +59,7 @@
   </thead>
   <tbody id="attribute">
     <%= for attribute <- @product.attributes do %>
-      <tr id="attribute-<%= attribute.product_id %>-<%= attribute.supplier_id %>">
+      <tr id={"attribute-#{attribute.product_id}-#{attribute.supplier_id}"}>
         <td><%= attribute.supplier.name %></td>
         <td><%= attribute.price %></td>
       </tr>

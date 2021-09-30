@@ -8,7 +8,6 @@ To start the Phoenix server:
   * Move `.envrc.example` to `.envrc` and set the variables
   * [Optional] Start Postgres with `docker/docker-compose.yml` (if you don't already have Postgres locally installed)
   * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
   * Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.

@@ -1,7 +1,7 @@
 <h1>Listing Supplier</h1>
 
 <%= if @live_action in [:new, :edit] do %>
-  <%= live_modal @socket, StockedWeb.SupplierLive.FormComponent,
+  <%= live_modal StockedWeb.SupplierLive.FormComponent,
     id: @supplier.id || :new,
     title: @page_title,
     action: @live_action,
@@ -21,7 +21,7 @@
   </thead>
   <tbody id="supplier">
     <%= for supplier <- @supplier_collection do %>
-      <tr id="supplier-<%= supplier.id %>">
+      <tr id={"supplier-#{supplier.id}"}>
         <td><%= supplier.name %></td>
         <td><%= supplier.email_address %></td>
         <td><%= supplier.phone_number %></td>

@@ -103,7 +103,7 @@ defmodule StockedWeb.ProductLiveTest do
 
       assert html =~ "Product updated successfully"
       assert html =~ "some updated description"
-      assert html =~ "color:\n#DC143C"
+      assert html =~ "color:#DC143C"
     end
 
     test "deletes product in listing", %{conn: conn, product: product} do

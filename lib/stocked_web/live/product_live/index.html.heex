@@ -1,7 +1,7 @@
 <h1>Listing Product</h1>
 
 <%= if @live_action in [:new, :edit] do %>
-  <%= live_modal @socket, StockedWeb.ProductLive.FormComponent,
+  <%= live_modal StockedWeb.ProductLive.FormComponent,
     id: @product.id || :new,
     title: @page_title,
     action: @live_action,
@@ -22,7 +22,7 @@
   </thead>
   <tbody id="product">
     <%= for product <- @product_collection do %>
-      <tr id="product-<%= product.id %>">
+      <tr id={"product-#{product.id}"}>
         <td><%= product.name %></td>
         <td><%= product.description %></td>
         <%= if is_nil(product.stock) do %>
