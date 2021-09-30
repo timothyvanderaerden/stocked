@@ -1,0 +1,5 @@
+<p style={"display:inline;margin-bottom:0;color:
+  #{(if @stock.quantity >= @stock.required_quantity, do: "#149414",
+    else: (if @stock.quantity >= (@stock.required_quantity / 100 * 30), do: "#FF8B3D", else: "#DC143C"))}"}>
+  <%= @stock.quantity %>
+</p>

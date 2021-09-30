@@ -59,7 +59,7 @@
   </thead>
   <tbody id="attribute">
     <%= for attribute <- @product.attributes do %>
-      <tr id="attribute-<%= attribute.product_id %>-<%= attribute.supplier_id %>">
+      <tr id={"attribute-#{attribute.product_id}-#{attribute.supplier_id}"}>
         <td><%= attribute.supplier.name %></td>
         <td><%= attribute.price %></td>
       </tr>

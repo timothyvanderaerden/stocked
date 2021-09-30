@@ -21,7 +21,7 @@
   </thead>
   <tbody id="supplier">
     <%= for supplier <- @supplier_collection do %>
-      <tr id="supplier-<%= supplier.id %>">
+      <tr id={"supplier-#{supplier.id}"}>
         <td><%= supplier.name %></td>
         <td><%= supplier.email_address %></td>
         <td><%= supplier.phone_number %></td>

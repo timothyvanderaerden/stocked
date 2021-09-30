@@ -22,7 +22,7 @@
   </thead>
   <tbody id="product">
     <%= for product <- @product_collection do %>
-      <tr id="product-<%= product.id %>">
+      <tr id={"product-#{product.id}"}>
         <td><%= product.name %></td>
         <td><%= product.description %></td>
         <%= if is_nil(product.stock) do %>
